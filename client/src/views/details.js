@@ -37,14 +37,19 @@ const DetailsView = ({ product }) => {
       </div>
       <div>
         <h3>Descripción</h3>
-        <Markup content={product.longDescription} />
+        <Markup
+          content={product.longDescription.replace(/<head>.+<\/head>/g, "")}
+        />
       </div>
       <div>
         <h3>Especificaciones</h3>
         {product.attributes
           .filter(({ displayable }) => displayable)
           .map(({ name, value }) => (
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div
+              key={name}
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
               <div>{name}</div>
               <div>{value}</div>
             </div>
