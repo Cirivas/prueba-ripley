@@ -3,6 +3,7 @@ import request from 'request';
 import cors from 'cors';
 import { skus } from './sku';
 import simple from './simple-api';
+import { setKeys, setKey } from './redis-client';
 
 const app = express();
 
@@ -18,10 +19,13 @@ app.get('/api/products', (_, res) => {
     if (error) {
       return res.send(500); // Internal server error
     }
+    // Set redis cache before sending data.
+    setKeys(body);
     return res.send(body);
   });
 });
 
+// Get an specific product info
 app.get('/api/products/:partNumber', (req, res) => {
   const {
     params: { partNumber },
@@ -31,6 +35,9 @@ app.get('/api/products/:partNumber', (req, res) => {
     if (error) {
       return res.send(500);
     }
+    // Set redis cache before sending data.
+    const value = JSON.stringify(body);
+    setKey(body.partNumber, value);
     return res.send(body);
   });
 });
