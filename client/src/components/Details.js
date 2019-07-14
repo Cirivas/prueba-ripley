@@ -3,16 +3,18 @@ import api from "./../config/apiRoutes";
 import { DetailsView } from "../views";
 
 const Details = ({ match }) => {
+  const [product, setProduct] = React.useState(null);
+
   React.useEffect(() => {
     const {
       params: { partNumber }
     } = match;
     fetch(api.products.byPartNumber(partNumber))
       .then(res => res.json())
-      .then(res => console.log(res));
-  });
+      .then(response => setProduct(response));
+  }, [match]);
 
-  return <DetailsView />;
+  return <DetailsView product={product} />;
 };
 
 export default Details;
