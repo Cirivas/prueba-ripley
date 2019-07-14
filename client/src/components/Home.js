@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Card } from "../design";
+import { List, Product } from "../design";
 import api from "./../config/apiRoutes";
 
 const Home = () => {
@@ -19,7 +19,7 @@ const Home = () => {
   ) : (
     <List>
       {(products || []).map(product => (
-        <Card
+        <Product
           key={product.uniqueID}
           img={`https:${product.fullImage}`}
           title={product.name}

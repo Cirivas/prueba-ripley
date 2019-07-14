@@ -1,4 +1,4 @@
-import Card from "./card";
+import Product from "./product";
 import List from "./list";
 
-export { Card, List };
+export { Product, List };

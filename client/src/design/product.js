@@ -34,7 +34,7 @@ const Body = styled.div`
   padding: 20px;
 `;
 
-const Card = ({ img, title, body, onClick }) => {
+const Product = ({ img, title, body, onClick }) => {
   return (
     <Container onClick={onClick}>
       <Header>
@@ -46,11 +46,11 @@ const Card = ({ img, title, body, onClick }) => {
   );
 };
 
-Card.propTypes = {
+Product.propTypes = {
   img: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired
 };
 
-export default Card;
+export default Product;
