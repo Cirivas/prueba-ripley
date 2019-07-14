@@ -28,4 +28,15 @@ export const setKeys = (values = []) => {
   });
 };
 
+// Get a key from REDIS
+// returns a promise with value, or rejects if no value was found or if there was an error
+export const getKey = key => new Promise((resolve, reject) => {
+  client.get(key, (error, result) => {
+    if (error || !result) {
+      return reject();
+    }
+    return resolve(result);
+  });
+});
+
 export default client;
