@@ -4,13 +4,14 @@ import cors from 'cors';
 import { skus } from './sku';
 import simple from './simple-api';
 import { setKeys, setKey, allKey } from './services/redis-client';
+import cacheReader from './middleware/cacheReader';
 
 const app = express();
 
 app.use(cors());
 
 // Get all products (from a SKU list)
-app.get('/api/products', (_, res) => {
+app.get('/api/products', cacheReader(allKey), (_, res) => {
   // Take ["a", "b", ...] to "a,b,..."
   const partNumbers = skus.join(',');
   const uri = simple().byPartNumbers(partNumbers);
@@ -29,7 +30,7 @@ app.get('/api/products', (_, res) => {
 });
 
 // Get an specific product info
-app.get('/api/products/:partNumber', (req, res) => {
+app.get('/api/products/:partNumber', cacheReader(), (req, res) => {
   const {
     params: { partNumber },
   } = req;
