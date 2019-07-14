@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 
 // Get all products (from a SKU list)
-app.get('/products', (_, res) => {
+app.get('/api/products', (_, res) => {
   // Take ["a", "b", ...] to "a,b,..."
   const partNumbers = skus.join(',');
   const uri = simple().byPartNumbers(partNumbers);
@@ -22,7 +22,7 @@ app.get('/products', (_, res) => {
   });
 });
 
-app.get('/product/:partNumber', (req, res) => {
+app.get('/api/product/:partNumber', (req, res) => {
   const {
     params: { partNumber },
   } = req;
