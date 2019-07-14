@@ -4,8 +4,8 @@ const TTL = 60;
 
 export const allKey = 'ALL';
 
-// Use default redis://127.0.0.1/6379
-const client = redis.createClient();
+// Use default redis://127.0.0.1/6379 or env variable
+const client = redis.createClient(process.env.REDIS_URL || null);
 client.on('connect', () => {
   console.log('connected to redis client');
 });
