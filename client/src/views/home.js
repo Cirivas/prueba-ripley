@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { List, Product } from "./../design";
+import Spinner from "../design/spinner";
 
 const HomeView = ({ products, onClick }) => {
   return !products ? (
-    <div>Loading</div>
+    <Spinner />
   ) : (
     <List>
       {(products || []).map(product => (

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Markup } from "interweave";
+import Spinner from "../design/spinner";
 
 const Container = styled.div`
   margin-left: auto;
@@ -13,7 +14,7 @@ const Container = styled.div`
 
 const DetailsView = ({ product }) => {
   return !product ? (
-    <div>Cargando</div>
+    <Spinner />
   ) : (
     <Container>
       <div style={{ display: "flex" }}>
