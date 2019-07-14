@@ -3,7 +3,7 @@ import request from 'request';
 import cors from 'cors';
 import { skus } from './sku';
 import simple from './simple-api';
-import { setKeys, setKey, allKey } from './redis-client';
+import { setKeys, setKey, allKey } from './services/redis-client';
 
 const app = express();
 
