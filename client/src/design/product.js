@@ -48,7 +48,43 @@ const Discount = styled.div`
   font-weight: 600;
 `;
 
-const Product = ({ img, title, body, discount, onClick }) => {
+const Prices = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  li {
+    margin: 0;
+    text-decoration: line-through;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.3em;
+    :last-child {
+      text-decoration: none;
+      color: #e75353
+      font-weight: 600;
+      font-size: 16px;
+    }
+    :first-child ~ li:not(:last-child) {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+
+  img {
+    margin-left: 4px;
+    width: 18px;
+    height: 12px;
+  }
+`;
+
+const Product = ({
+  img,
+  title,
+  prices: { formattedListPrice, formattedCardPrice, formattedOfferPrice },
+  discount,
+  onClick
+}) => {
   return (
     <Container onClick={onClick}>
       {discount && <Discount>-{discount}%</Discount>}
@@ -56,7 +92,23 @@ const Product = ({ img, title, body, discount, onClick }) => {
         <img alt="cover" src={img} />
         <h2>{title}</h2>
       </Header>
-      <Body>{body}</Body>
+      <Body>
+        <Prices>
+          <li>{formattedListPrice}</li>
+          {discount && formattedListPrice !== formattedOfferPrice && (
+            <li>{formattedOfferPrice}</li>
+          )}
+          {discount && formattedCardPrice && (
+            <li>
+              {formattedCardPrice}
+              <img
+                src="https://static.ripley.cl/images/opex.png"
+                alt="Precio Tarjeta Ripley"
+              />
+            </li>
+          )}
+        </Prices>
+      </Body>
     </Container>
   );
 };
@@ -64,7 +116,7 @@ const Product = ({ img, title, body, discount, onClick }) => {
 Product.propTypes = {
   img: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  body: PropTypes.string.isRequired,
+  prices: PropTypes.object.isRequired,
   discount: PropTypes.number,
   onClick: PropTypes.func.isRequired
 };
