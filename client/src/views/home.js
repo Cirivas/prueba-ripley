@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { List, Product } from "./../design";
-import Spinner from "../design/spinner";
+import { Spinner } from "../design";
 
 const HomeView = ({ products, onClick }) => {
   return !products ? (

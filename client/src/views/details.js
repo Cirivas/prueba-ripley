@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Markup } from "interweave";
-import Spinner from "../design/spinner";
+import { Spinner } from "../design";
 
 const Container = styled.div`
   margin-left: auto;
@@ -36,14 +36,14 @@ const DetailsView = ({ product }) => {
           )}
         </div>
       </div>
-      <div>
-        <h3>Descripción</h3>
+      <details>
+        <summary>Descripción</summary>
         <Markup
           content={product.longDescription.replace(/<head>.+<\/head>/g, "")}
         />
-      </div>
-      <div>
-        <h3>Especificaciones</h3>
+      </details>
+      <details>
+        <summary>Especificaciones</summary>
         {product.attributes
           .filter(({ displayable }) => displayable)
           .map(({ name, value }) => (
@@ -55,7 +55,7 @@ const DetailsView = ({ product }) => {
               <div>{value}</div>
             </div>
           ))}
-      </div>
+      </details>
     </Container>
   );
 };
