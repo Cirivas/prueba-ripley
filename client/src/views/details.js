@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Markup } from "interweave";
-import { Spinner } from "../design";
+import { Spinner, Slider } from "../design";
 
 const Container = styled.div`
   margin-left: auto;
@@ -19,11 +19,7 @@ const DetailsView = ({ product }) => {
     <Container>
       <div style={{ display: "flex" }}>
         <div style={{ flex: 2 }}>
-          <img
-            alt="product"
-            style={{ width: "100%" }}
-            src={`http:${product.fullImage}`}
-          />
+          <Slider images={product.images} />
         </div>
         <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
           <p>{product.name}</p>
