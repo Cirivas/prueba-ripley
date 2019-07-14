@@ -3,7 +3,7 @@ import request from 'request';
 import cors from 'cors';
 import { skus } from './sku';
 import simple from './simple-api';
-import { setKeys, setKey } from './redis-client';
+import { setKeys, setKey, allKey } from './redis-client';
 
 const app = express();
 
@@ -20,6 +20,10 @@ app.get('/api/products', (_, res) => {
       return res.send(500); // Internal server error
     }
     // Set redis cache before sending data.
+    // First we store SKUs retrieved from API.
+    const values = body.map(({ partNumber }) => partNumber);
+    setKey(allKey, JSON.stringify(values));
+    // Then we set every individual key, as the info is the same.
     setKeys(body);
     return res.send(body);
   });
