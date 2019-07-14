@@ -1,9 +1,15 @@
 import React from "react";
-import { List, Product } from "../design";
 import api from "./../config/apiRoutes";
+import { HomeView } from "../views";
 
 const Home = () => {
   const [products, setProducts] = React.useState(null);
+
+  const loadDetails = ({ partNumber }) => {
+    fetch(api.products.byPartNumber(partNumber))
+      .then(res => res.json())
+      .then(res => console.log(res));
+  };
 
   // At component mount, load products
   React.useEffect(() => {
@@ -14,25 +20,7 @@ const Home = () => {
       });
   }, []);
 
-  return !products ? (
-    <div>Loading</div>
-  ) : (
-    <List>
-      {(products || []).map(product => (
-        <Product
-          key={product.uniqueID}
-          img={`https:${product.fullImage}`}
-          title={product.name}
-          body={product.prices.formattedListPrice}
-          onClick={() =>
-            fetch(api.products.byPartNumber(product.partNumber))
-              .then(res => res.json())
-              .then(res => console.log(res))
-          }
-        />
-      ))}
-    </List>
-  );
+  return <HomeView products={products} onClick={loadDetails} />;
 };
 
 export default Home;
