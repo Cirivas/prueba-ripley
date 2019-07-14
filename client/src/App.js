@@ -7,16 +7,22 @@ const Container = styled.div`
   height: 100vh;
 `;
 
+const Padding = styled.div`
+  padding: 5px;
+`;
+
 function App() {
   return (
     <Switch>
       <Container>
         <Searchbar />
-        <Route exact path="/" component={Home} />
-        <Route path="/home" component={Home} />
-        <Route path="/product/:partNumber" component={Details} />
-        {/* Little "hack" to refresh page if user clicks logo in dashboard */}
-        <Route path="/r" component={null} />{" "}
+        <Padding>
+          <Route exact path="/" component={Home} />
+          <Route path="/home" component={Home} />
+          <Route path="/product/:partNumber" component={Details} />
+          {/* Little "hack" to refresh page if user clicks logo in dashboard */}
+          <Route path="/r" component={null} />{" "}
+        </Padding>
       </Container>
     </Switch>
   );
