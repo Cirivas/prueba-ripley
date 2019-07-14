@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 
 // Serve static files from react client
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(`${__dirname}/../client/build`));
 
 // Get all products (from a SKU list)
 app.get('/api/products', cacheReader(allKey), (_, res) => {
@@ -49,7 +49,7 @@ app.get('/api/products/:partNumber', cacheReader(), (req, res) => {
 
 // For non matching routes, serve index
 app.get('*', (req, res) => {
-  res.sendFile(path.join(`${__dirname}/client/build/index.html`));
+  res.sendFile(path.join(__dirname, '/../client/build/index.html'));
 });
 
-app.listen(5000);
+app.listen(process.env.PORT || 5000);
