@@ -77,6 +77,15 @@ const Slider = ({ images }) => {
     return document.querySelector(".slide").clientWidth;
   };
 
+  // Change slide automatically
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      incrementIndex();
+    }, 2500);
+
+    return () => clearInterval(interval);
+  });
+
   return (
     <SlidesContainer>
       <Arrow side={"left"} onClick={decrementIndex} />
