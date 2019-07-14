@@ -4,7 +4,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 const SlidesContainer = styled.div`
-  height: 400px;
+  height: 440px;
   overflow: hidden;
   white-space: nowrap;
   position: relative;
@@ -15,8 +15,8 @@ const Slide = ({ image }) => {
     backgroundImage: `url(${image})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    backgroundPosition: "50% 60%",
-    height: 400,
+    backgroundPosition: "center",
+    height: 440,
     display: "inline-block",
     width: "100%"
   };
@@ -88,8 +88,12 @@ const Slider = ({ images }) => {
 
   return (
     <SlidesContainer>
-      <Arrow side={"left"} onClick={decrementIndex} />
-      <Arrow side={"right"} onClick={incrementIndex} />
+      {images.length > 1 && (
+        <>
+          <Arrow side={"left"} onClick={decrementIndex} />
+          <Arrow side={"right"} onClick={incrementIndex} />
+        </>
+      )}
       <SliderWrapper translateValue={translateValue}>
         {(images || []).map((image, index) => (
           <Slide key={index} image={image} />
