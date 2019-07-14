@@ -1,9 +1,9 @@
 import express from 'express';
-import request from 'request';
 import cors from 'cors';
 import { skus } from './sku';
 import simple from './simple-api';
 import { setKeys, setKey, allKey } from './services/redis-client';
+import requestRetrier from './services/request-retry';
 import cacheReader from './middleware/cacheReader';
 
 const app = express();
@@ -16,10 +16,8 @@ app.get('/api/products', cacheReader(allKey), (_, res) => {
   const partNumbers = skus.join(',');
   const uri = simple().byPartNumbers(partNumbers);
   // do request. (json: {} parse the response body automatically)
-  return request.get(uri, { json: {} }, (error, r, body) => {
-    if (error) {
-      return res.send(500); // Internal server error
-    }
+  const request = { uri, method: 'GET', json: {} };
+  return requestRetrier(request).then((body) => {
     // Set redis cache before sending data.
     // First we store SKUs retrieved from API.
     setKey(allKey, JSON.stringify(body));
@@ -35,10 +33,8 @@ app.get('/api/products/:partNumber', cacheReader(), (req, res) => {
     params: { partNumber },
   } = req;
   const uri = simple().byPartNumber(partNumber);
-  return request.get(uri, { json: {} }, (error, r, body) => {
-    if (error) {
-      return res.send(500);
-    }
+  const request = { uri, method: 'GET', json: {} };
+  return requestRetrier(request).then((body) => {
     // Set redis cache before sending data.
     const value = JSON.stringify(body);
     setKey(body.partNumber, value);
