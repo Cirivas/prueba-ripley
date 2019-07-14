@@ -15,6 +15,8 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route path="/home" component={Home} />
         <Route path="/product/:partNumber" component={Details} />
+        {/* Little "hack" to refresh page if user clicks logo in dashboard */}
+        <Route path="/r" component={null} />{" "}
       </Container>
     </Switch>
   );

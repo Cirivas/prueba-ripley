@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { Search } from "../views";
 
 const Searchbar = ({ history }) => {
   const handleSearch = event => {
@@ -9,13 +10,15 @@ const Searchbar = ({ history }) => {
     }
   };
 
-  return (
-    <input
-      type="text"
-      placeholder="Buscar por SKU..."
-      onKeyDown={handleSearch}
-    />
-  );
+  const handleLogoClick = () => {
+    history.push("/r");
+    // Little "hack" to make page reload if logo is click on dashboard
+    setTimeout(() => {
+      history.push("/");
+    });
+  };
+
+  return <Search onKeyDown={handleSearch} onLogoClick={handleLogoClick} />;
 };
 
 // As this component is not part of a route, we need withRouter HOC to get the history prop.
