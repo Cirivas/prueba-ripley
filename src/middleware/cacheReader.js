@@ -1,5 +1,8 @@
 import { allKey, getKey } from '../services/redis-client';
 
+// Reads data from REDIS
+// if type is allKey, returns it key
+// otherwise, read partNumber in requested URI
 const cacheReader = type => (req, res, next) => {
   if (type === allKey) {
     // We need to see if allkey exits in redis
@@ -19,6 +22,13 @@ const cacheReader = type => (req, res, next) => {
   const {
     params: { partNumber },
   } = req;
+
+  // if no partNumber found in url, go to next method.
+  if (!partNumber) {
+    next();
+    return null;
+  }
+
   return getKey(partNumber)
     .then((result) => {
       // if we got a result, send inmediately to user.
