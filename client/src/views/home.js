@@ -13,6 +13,7 @@ const HomeView = ({ products, onClick }) => {
           img={`https:${product.fullImage}`}
           title={product.name}
           body={product.prices.formattedListPrice}
+          discount={product.prices.discountPercentage || null}
           onClick={() => onClick(product)}
         />
       ))}
