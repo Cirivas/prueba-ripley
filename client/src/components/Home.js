@@ -6,7 +6,7 @@ const Home = () => {
 
   // At component mount, load products
   React.useEffect(() => {
-    fetch("http://localhost:5000/api/products")
+    fetch("/api/products")
       .then(res => res.json())
       .then(response => {
         setProducts(response);
@@ -23,7 +23,7 @@ const Home = () => {
           title={product.name}
           body={product.prices.formattedListPrice}
           onClick={() =>
-            fetch(`http://localhost:5000/api/product/${product.partNumber}`)
+            fetch(`/api/product/${product.partNumber}`)
               .then(res => res.json())
               .then(res => console.log(res))
           }
