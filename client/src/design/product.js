@@ -3,7 +3,6 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 const Container = styled.div`
-  border: 1px solid #e8e8e8;
   box-sizing: border-box;
   margin: 10px 4px;
   padding: 0;
