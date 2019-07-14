@@ -22,7 +22,7 @@ app.get('/api/products', (_, res) => {
   });
 });
 
-app.get('/api/product/:partNumber', (req, res) => {
+app.get('/api/products/:partNumber', (req, res) => {
   const {
     params: { partNumber },
   } = req;

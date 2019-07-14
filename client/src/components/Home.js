@@ -13,6 +13,7 @@ const Home = () => {
         setProducts(response);
       });
   }, []);
+
   return !products ? (
     <div>Loading</div>
   ) : (
