@@ -33,6 +33,7 @@ const Img = styled.img`
   width: auto;
   position: absolute;
   left: 80px;
+  cursor: pointer;
 `;
 
 const SearchView = ({ onKeyDown, onLogoClick }) => {
