@@ -1,4 +1,5 @@
 import HomeView from "./home";
 import DetailsView from "./details";
+import NotFound from "./notfound";
 
-export { HomeView, DetailsView };
+export { HomeView, DetailsView, NotFound };

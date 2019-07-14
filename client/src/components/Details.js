@@ -1,8 +1,8 @@
 import React from "react";
 import api from "./../config/apiRoutes";
-import { DetailsView } from "../views";
+import { DetailsView, NotFound } from "../views";
 
-const Details = ({ match }) => {
+const Details = ({ match, history }) => {
   const [product, setProduct] = React.useState(null);
 
   React.useEffect(() => {
@@ -14,7 +14,11 @@ const Details = ({ match }) => {
       .then(response => setProduct(response));
   }, [match]);
 
-  return <DetailsView product={product} />;
+  return product && product.error ? (
+    <NotFound onClick={() => history.push("/")} />
+  ) : (
+    <DetailsView product={product} />
+  );
 };
 
 export default Details;
