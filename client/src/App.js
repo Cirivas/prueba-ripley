@@ -12,7 +12,7 @@ function App() {
     <Switch>
       <Container>
         <Route exact path="/" component={Home} />
-        <Route path="*" component={Home} />
+        <Route path="/home" component={Home} />
       </Container>
     </Switch>
   );
