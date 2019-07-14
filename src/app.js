@@ -13,6 +13,7 @@ app.use(cors());
 // Get all products (from a SKU list)
 app.get('/api/products', cacheReader(allKey), (_, res) => {
   // Take ["a", "b", ...] to "a,b,..."
+  // This should be a Model query or something like that
   const partNumbers = skus.join(',');
   const uri = simple().byPartNumbers(partNumbers);
   // do request. (json: {} parse the response body automatically)
