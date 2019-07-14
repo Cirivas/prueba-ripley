@@ -18,10 +18,10 @@ const DetailsView = ({ product }) => {
   ) : (
     <Container>
       <div style={{ display: "flex" }}>
-        <div style={{ flex: 2 }}>
+        <div style={{ width: "60%" }}>
           <Slider images={product.images} />
         </div>
-        <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        <div style={{ width: "40%", display: "flex", flexDirection: "column" }}>
           <p>{product.name}</p>
           <p>SKU: {product.partNumber}</p>
           <p>Normal: {product.prices.formattedListPrice}</p>

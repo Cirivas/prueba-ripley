@@ -4,23 +4,20 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 const SlidesContainer = styled.div`
-  height: 440px;
+  height: 100%;
   overflow: hidden;
   white-space: nowrap;
   position: relative;
+  width: 100%;
 `;
 
 const Slide = ({ image }) => {
   const styles = {
-    backgroundImage: `url(${image})`,
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-    height: 440,
+    height: "auto",
     display: "inline-block",
     width: "100%"
   };
-  return <div className="slide" style={styles} />;
+  return <img className="slide" style={styles} src={image} alt="product" />;
 };
 
 const SliderWrapper = styled.div`
