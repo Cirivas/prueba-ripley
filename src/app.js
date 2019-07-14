@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
 import { skus } from './sku';
 import simple from './simple-api';
 import { setKeys, setKey, allKey } from './services/redis-client';
@@ -9,6 +10,9 @@ import cacheReader from './middleware/cacheReader';
 const app = express();
 
 app.use(cors());
+
+// Serve static files from react client
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Get all products (from a SKU list)
 app.get('/api/products', cacheReader(allKey), (_, res) => {
@@ -43,6 +47,9 @@ app.get('/api/products/:partNumber', cacheReader(), (req, res) => {
   });
 });
 
-app.listen(5000, () => {
-  console.log('Example app listening on port 5000!');
+// For non matching routes, serve index
+app.get('*', (req, res) => {
+  res.sendFile(path.join(`${__dirname}/client/build/index.html`));
 });
+
+app.listen(5000);

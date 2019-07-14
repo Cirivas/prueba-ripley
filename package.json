@@ -4,7 +4,9 @@
   "description": "Api para conexión entre simple.ripley y front",
   "scripts": {
     "start": "npm run build && node dist/app.js",
-    "build": "babel --presets es2015 -d dist/ src",
+    "clean": "rm -rf dist && mkdir dist",
+    "build": "npm run clean && babel --presets es2015 -d dist/ src",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
     "dev": "nodemon src/app.js --exec babel-node --presets babel-preset-env"
   },
   "author": "Camilo Rivas",
