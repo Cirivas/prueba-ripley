@@ -1,12 +1,13 @@
 import React from "react";
 import { List, Card } from "../design";
+import api from "./../config/apiRoutes";
 
 const Home = () => {
   const [products, setProducts] = React.useState(null);
 
   // At component mount, load products
   React.useEffect(() => {
-    fetch("/api/products")
+    fetch(api.products.all())
       .then(res => res.json())
       .then(response => {
         setProducts(response);
@@ -23,7 +24,7 @@ const Home = () => {
           title={product.name}
           body={product.prices.formattedListPrice}
           onClick={() =>
-            fetch(`/api/product/${product.partNumber}`)
+            fetch(api.products.byPartNumber(product.partNumber))
               .then(res => res.json())
               .then(res => console.log(res))
           }
