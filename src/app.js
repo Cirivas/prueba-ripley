@@ -3,7 +3,9 @@ import cors from 'cors';
 import path from 'path';
 import { skus } from './sku';
 import simple from './simple-api';
-import { setKeys, setKey, allKey } from './services/redis-client';
+import {
+  setKeys, setKey, allKey, setList, getList,
+} from './services/redis-client';
 import requestRetrier from './services/request-retry';
 import cacheReader from './middleware/cacheReader';
 
@@ -36,6 +38,7 @@ app.get('/api/products', cacheReader(allKey), (_, res) => {
 app.get('/api/products/:partNumber', cacheReader(), (req, res) => {
   const {
     params: { partNumber },
+    ip,
   } = req;
   const uri = simple().byPartNumber(partNumber);
   const request = { uri, method: 'GET', json: {} };
@@ -43,8 +46,21 @@ app.get('/api/products/:partNumber', cacheReader(), (req, res) => {
     // Set redis cache before sending data.
     const value = JSON.stringify(body);
     setKey(body.partNumber, value);
+    // Set redis cache for user visited products
+    setList(ip, value);
     return res.send(body);
   });
+});
+
+// Get visited product list
+app.get('/api/visited', (req, res) => {
+  const { ip } = req;
+  return getList(ip)
+    .then((result) => {
+      const parsed = result.map(element => JSON.parse(element));
+      res.send(parsed);
+    })
+    .catch(() => res.send([]));
 });
 
 // For non matching routes, serve index
