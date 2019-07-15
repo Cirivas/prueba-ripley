@@ -1,4 +1,4 @@
-import { allKey, getKey } from '../services/redis-client';
+import { allKey, getKey, setList } from '../services/redis-client';
 
 // Reads data from REDIS
 // if type is allKey, returns it key
@@ -21,6 +21,7 @@ const cacheReader = type => (req, res, next) => {
   // If type is different than allKey, we search in params
   const {
     params: { partNumber },
+    ip,
   } = req;
 
   // if no partNumber found in url, go to next method.
@@ -31,6 +32,8 @@ const cacheReader = type => (req, res, next) => {
 
   return getKey(partNumber)
     .then((result) => {
+      // Add the item to visted
+      setList(ip, result, false);
       // if we got a result, send inmediately to user.
       const parsed = JSON.parse(result);
       res.send(parsed);
