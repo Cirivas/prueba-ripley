@@ -1,5 +1,6 @@
 import redis from 'redis';
 
+// Time to live; defines time before a key in redis expires
 const TTL = 60;
 
 export const allKey = 'ALL';
@@ -12,10 +13,12 @@ client.on('connect', () => {
 
 // Store a single key in redis.
 // Keys will be the product partNumber
-export const setKey = (key, value) => {
+export const setKey = (key, value, expire = true) => {
   // Set the key and an expiring time for key
   client.set(key, value, () => {
-    client.expire(key, TTL);
+    if (expire) {
+      client.expire(key, TTL);
+    }
   });
 };
 
