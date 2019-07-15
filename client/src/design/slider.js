@@ -83,6 +83,11 @@ const Slider = ({ images }) => {
     return () => clearInterval(interval);
   });
 
+  // Reset on images change
+  React.useEffect(() => {
+    setCurrentIndex({ currentIndex: 0, translateValue: 0 });
+  }, [images]);
+
   return (
     <SlidesContainer>
       {images.length > 1 && (
