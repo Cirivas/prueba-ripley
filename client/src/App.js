@@ -9,6 +9,7 @@ const Container = styled.div`
 
 const Padding = styled.div`
   padding: 5px;
+  padding-bottom: 30px;
 `;
 
 function App() {
