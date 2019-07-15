@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { List, Product } from "./../design";
 import { Spinner } from "../design";
 
-const HomeView = ({ products, onClick }) => {
+const HomeView = ({ products, onClick, small = false }) => {
   return !products ? (
     <Spinner />
   ) : (
@@ -11,6 +11,7 @@ const HomeView = ({ products, onClick }) => {
       {(products || []).map(product => (
         <Product
           key={product.uniqueID}
+          small={small}
           img={`https:${product.fullImage}`}
           title={product.name}
           prices={product.prices}
@@ -24,7 +25,8 @@ const HomeView = ({ products, onClick }) => {
 
 HomeView.propTypes = {
   products: PropTypes.array,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  small: PropTypes.bool
 };
 
 export default HomeView;
