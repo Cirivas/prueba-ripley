@@ -3,7 +3,7 @@ import redis from 'redis';
 // Time to live; defines time before a key in redis expires
 const TTL = 60;
 // Defines maximum size of users visited products
-const MAX_SIZE = 5;
+const MAX_SIZE = 4;
 
 export const allKey = 'ALL';
 
@@ -39,13 +39,11 @@ export const setList = (key, value) => {
   // Remove the element of the list if it exists
   client.lrem(key, 0, value, () => {
     // push the new element
-    client.lpush(key, value, (err, length) => {
-      // After the insertion, we trim list to limit of element;
-      if (length === MAX_SIZE) {
-        // remove the first element, by keeping the range of 1 to length
-        // (list index starts on 0)
-        client.ltrim(key, 1, -1);
-      }
+    client.lpush(key, value, () => {
+      // After the insertion, we trim list to limit elements;
+      // We remove the first element inserted, by keeping the range of 0 to MAX_SIZE - 1
+      // (list index starts on 0)
+      client.ltrim(key, 0, MAX_SIZE - 1);
     });
   });
 };
