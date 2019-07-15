@@ -28,8 +28,8 @@ const Title = styled.h2`
 `;
 
 const Sku = styled.h3`
-  font-size: 16px;
-  opacity: 0.8;
+  font-size: 10px;
+  opacity: 0.6;
   letter-spacing: 1px;
   margin: 0;
 `;
