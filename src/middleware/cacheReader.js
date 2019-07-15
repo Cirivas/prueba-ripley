@@ -1,7 +1,7 @@
 import { allKey, getKey, setList } from '../services/redis-client';
 
 // Reads data from REDIS
-// if type is allKey, returns it key
+// if type is allKey, returns its key
 // otherwise, read partNumber in requested URI
 const cacheReader = type => (req, res, next) => {
   if (type === allKey) {
