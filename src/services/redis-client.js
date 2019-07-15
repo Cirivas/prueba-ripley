@@ -2,6 +2,8 @@ import redis from 'redis';
 
 // Time to live; defines time before a key in redis expires
 const TTL = 60;
+// Defines maximum size of users visited products
+const MAX_SIZE = 5;
 
 export const allKey = 'ALL';
 
@@ -30,6 +32,34 @@ export const setKeys = (values = []) => {
     setKey(value.partNumber, parsed);
   });
 };
+
+// Create a list of unique elements with MAX_SIZE as limit
+// value must be string
+export const setList = (key, value) => {
+  // Remove the element of the list if it exists
+  client.lrem(key, 0, value, () => {
+    // push the new element
+    client.lpush(key, value, (err, length) => {
+      // After the insertion, we trim list to limit of element;
+      if (length === MAX_SIZE) {
+        // remove the first element, by keeping the range of 1 to length
+        // (list index starts on 0)
+        client.ltrim(key, 1, -1);
+      }
+    });
+  });
+};
+
+// Get elements from list
+export const getList = key => new Promise((resolve, reject) => {
+  // this methods returns an array of string
+  client.lrange(key, 0, -1, (error, result) => {
+    if (error || result.length === 0) {
+      return reject();
+    }
+    return resolve(result);
+  });
+});
 
 // Get a key from REDIS
 // returns a promise with value, or rejects if no value was found or if there was an error
