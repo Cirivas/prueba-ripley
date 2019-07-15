@@ -136,6 +136,15 @@ const Details = styled.details`
   }
 `;
 
+const DivRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 5px 15px;
+  border-top: 1px solid #ddd;
+  ${({ index }) => index % 2 !== 1 && "background-color: #f9f9f9"}
+`;
+
 const DetailsView = ({ product }) => {
   return !product ? (
     <Spinner />
@@ -196,13 +205,10 @@ const DetailsView = ({ product }) => {
         {product.attributes
           .filter(({ displayable }) => displayable)
           .map(({ name, value }, index) => (
-            <div
-              key={name}
-              style={{ display: "flex", justifyContent: "space-between" }}
-            >
-              <div style={{ width: "20%" }}>{name}</div>
-              <div style={{ width: "80%" }}>{value}</div>
-            </div>
+            <DivRow key={name} index={index}>
+              <div style={{ width: "30%" }}>{name}</div>
+              <div style={{ width: "70%" }}>{value}</div>
+            </DivRow>
           ))}
       </Details>
     </Container>
