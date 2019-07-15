@@ -10,8 +10,13 @@ const Container = styled.div`
   background: #fff;
   cursor: pointer;
   transition: all 0.3s;
-  height: 350px;
-  width: 280px;
+  ${({ small }) => {
+    if (small) {
+      return "height: auto; width: 150px";
+    }
+    return "height: 350px; width: 280px";
+  }}
+
   position: relative;
   :hover {
     border-color: rgba(0, 0, 0, 0.09);
@@ -82,10 +87,11 @@ const Product = ({
   title,
   prices: { formattedListPrice, formattedCardPrice, formattedOfferPrice },
   discount,
-  onClick
+  onClick,
+  small = false
 }) => {
   return (
-    <Container onClick={onClick}>
+    <Container onClick={onClick} small={small}>
       {discount && <Discount>-{discount}%</Discount>}
       <Header>
         <img alt="cover" src={img} />
